@@ -1,0 +1,95 @@
+interface AbstractFactory {
+  createProductA(): AbstractProductA; // 의자 만들기
+
+  createProductB(): AbstractProductB; // 소파 만들기
+}
+
+class ConcreteFactory1 implements AbstractFactory {
+  // 아르데코식 공장
+  public createProductA(): AbstractProductA {
+    return new ConcreteProductA1();
+  }
+
+  public createProductB(): AbstractProductB {
+    return new ConcreteProductB1();
+  }
+}
+
+class ConcreteFactory2 implements AbstractFactory {
+  // 빅토리안식 공장
+  public createProductA(): AbstractProductA {
+    return new ConcreteProductA2();
+  }
+
+  public createProductB(): AbstractProductB {
+    return new ConcreteProductB2();
+  }
+}
+
+interface AbstractProductA {
+  // 의자
+  usefulFunctionA(): string;
+}
+
+class ConcreteProductA1 implements AbstractProductA {
+  // 아르데코식 의자
+  public usefulFunctionA(): string {
+    return "The result of the product A1.";
+  }
+}
+
+class ConcreteProductA2 implements AbstractProductA {
+  // 빅토리안식 의자
+  public usefulFunctionA(): string {
+    return "The result of the product A2.";
+  }
+}
+
+interface AbstractProductB {
+  // 소파
+  usefulFunctionB(): string;
+
+  anotherUsefulFunctionB(collaborator: AbstractProductA): string;
+}
+
+class ConcreteProductB1 implements AbstractProductB {
+  // 아르데코식 소파
+  public usefulFunctionB(): string {
+    return "The result of the product B1.";
+  }
+
+  public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
+    const result = collaborator.usefulFunctionA();
+    return `The result of the B1 collaborating with the (${result})`;
+  }
+}
+
+class ConcreteProductB2 implements AbstractProductB {
+  // 빅토리안식 소파
+  public usefulFunctionB(): string {
+    return "The result of the product B2.";
+  }
+
+  public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
+    const result = collaborator.usefulFunctionA();
+    return `The result of the B2 collaborating with the (${result})`;
+  }
+}
+
+function clientCode(factory: AbstractFactory) {
+  const productA = factory.createProductA();
+  const productB = factory.createProductB();
+
+  console.log(productB.usefulFunctionB());
+  console.log(productB.anotherUsefulFunctionB(productA));
+}
+
+console.log("Client: Testing client code with the first factory type...");
+clientCode(new ConcreteFactory1());
+
+console.log("");
+
+console.log(
+  "Client: Testing the same client code with the second factory type..."
+);
+clientCode(new ConcreteFactory2());
