@@ -1,74 +1,37 @@
-/**
- * The example class that has cloning ability. We'll see how the values of field
- * with different types will be cloned.
- */
-class Prototype {
-  public primitive: any;
-  public component: object;
-  public circularReference: ComponentWithBackReference;
+// 클론 메서드를 정의하는 인터페이스
+interface Cloneable {
+  clone(): Person; // 보통은 clone메서드를 많이씁니다.
+}
 
-  public clone(): this {
-    const clone = Object.create(this);
+// Cloneable 인터페이스를 구현하는 실제 객체 (클론메서드 구현)
+class Person implements Cloneable {
+  // 사람 객체는 이름과 나이를 갖습니다. 즉 복제될 객체도 이름과 나이를 갖는 객체입니다.
+  private name: string;
+  private age: number;
 
-    clone.component = Object.create(this.component);
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
 
-    // Cloning an object that has a nested object with backreference
-    // requires special treatment. After the cloning is completed, the
-    // nested object should point to the cloned object, instead of the
-    // original object. Spread operator can be handy for this case.
-    clone.circularReference = {
-      ...this.circularReference,
-      prototype: { ...this },
-    };
+  public getName(): string {
+    return this.name;
+  }
 
-    return clone;
+  public getAge(): number {
+    return this.age;
+  }
+
+  // 클론 메서드 구현 : 단순히 사람 본인의 이름과 나이를 똑같이 갖는 즉, 동일한 속성값들을 갖는 객체 생성
+  public clone(): Person {
+    return new Person(this.name, this.age);
   }
 }
 
-class ComponentWithBackReference {
-  public prototype;
+const person1 = new Person("Alice", 30);
+const person2 = person1.clone(); // 객체 복제
 
-  constructor(prototype: Prototype) {
-    this.prototype = prototype;
-  }
-}
-
-/**
- * The client code.
- */
-function clientCode() {
-  const p1 = new Prototype();
-  p1.primitive = 245;
-  p1.component = new Date();
-  p1.circularReference = new ComponentWithBackReference(p1);
-
-  const p2 = p1.clone();
-  if (p1.primitive === p2.primitive) {
-    console.log(
-      "Primitive field values have been carried over to a clone. Yay!"
-    );
-  } else {
-    console.log("Primitive field values have not been copied. Booo!");
-  }
-  if (p1.component === p2.component) {
-    console.log("Simple component has not been cloned. Booo!");
-  } else {
-    console.log("Simple component has been cloned. Yay!");
-  }
-
-  if (p1.circularReference === p2.circularReference) {
-    console.log("Component with back reference has not been cloned. Booo!");
-  } else {
-    console.log("Component with back reference has been cloned. Yay!");
-  }
-
-  if (p1.circularReference.prototype === p2.circularReference.prototype) {
-    console.log(
-      "Component with back reference is linked to original object. Booo!"
-    );
-  } else {
-    console.log("Component with back reference is linked to the clone. Yay!");
-  }
-}
-
-clientCode();
+console.log(person1.getName()); // "Alice"
+console.log(person1.getAge()); // 30
+console.log(person2.getName()); // "Alice"
+console.log(person2.getAge()); // 30
