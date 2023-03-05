@@ -19,6 +19,10 @@
    - 동일한 객체이지만 동일한 멤버변수로 인해 원형과 정확히 똑같은 형식으로 작동한다고 해도 그 객체는 동일한 객체일까요? 메모리 주소 값도 다를건데요. 단순한 눈속임이 아닐까요?
    - 왜 굳이 클래스까지 써가면서 객체를 복사할까요? object.create, assign이나 spread 연산자를 쓰면 객체를 동일하게 복사할 수 있는데요?
 
+> (JM) 원형과 클론 비교 시 원시변수는 같고 참조변수는 다르네요. 동일하지 않은 객체입니다.
+- 사용 사례들: 프로토타입 패턴은 자바스크립트 고유의 Object.assign() 메서드를 통해 자바스크립트 코드에서 바로 사용할 수 있습니다.
+- https://developer.mozilla.org/ko/docs/Web/JavaScript/Equality_comparisons_and_sameness
+
 ## 결과
 
 ![result](./img/result.png)
