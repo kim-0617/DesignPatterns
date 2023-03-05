@@ -2,9 +2,10 @@ class Singleton {
   // 실제로 싱글턴에 접근하는 객체들이 이용할 멤버변수, 이걸로 비즈니스 로직 실행
   private static instance: Singleton;
 
-  // 외부에서 인스턴스 생성 금지
+  // 외부에서 인스턴스 생성 금지(private)
   private constructor() {}
 
+  // 싱글턴 인스턴스에 접근을 제어하는 정적 메서드. 클라이언트는 정적 메서드로 유일한 싱글턴 인스턴스를 접근할 수 있다.
   public static getInstance(): Singleton {
     // 없으면 싱글턴 클래스의 유일한 인스턴스를 생성한다.
     if (!Singleton.instance) {
@@ -13,7 +14,7 @@ class Singleton {
     return Singleton.instance; // 있으면 있는거 return
   }
 
-  // 실제 수행할 비즈니스 로직
+  // 인스턴스에서 실제 수행할 비즈니스 로직
   public doSomething(): void {
     console.log("Singleton instance is doing something.");
   }
