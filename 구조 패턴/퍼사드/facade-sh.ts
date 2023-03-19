@@ -87,3 +87,12 @@ const subsystem1 = new Subsystem1();
 const subsystem2 = new Subsystem2();
 const facade = new Facade(subsystem1, subsystem2);
 clientCode(facade);
+
+/*
+    클라이언트 코드가 하위 시스템의 객체들을 생성하지 않은 경우
+    이 경우, 퍼사드가 새로운 인스턴스를 생성합니다.
+*/
+console.log('');
+console.log('<--- 클라이언트 코드가 하위 시스템의 객체들을 생성하지 않은 경우 --->');
+const facadeNoArgs = new Facade();
+clientCode(facadeNoArgs);
