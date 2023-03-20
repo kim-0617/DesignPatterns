@@ -12,6 +12,14 @@ class TextEditor {
     // Flyweight 객체 상태 변경
     this.characters[char].setPos(posX, posY);
   }
+
+  public listFlyweights(): void {
+    const count = Object.keys(this.characters).length;
+    console.log(`\nFlyweightFactory: I have ${count} flyweights:`);
+    for (const key in this.characters) {
+        console.log(key);
+    }
+}
 }
 
 // 객체만의 고유 속성
@@ -42,3 +50,15 @@ editor.addCharacter("b", 10, 0);
 editor.addCharacter("a", 20, 0);
 editor.addCharacter("c", 30, 0);
 editor.addCharacter("b", 40, 0);
+
+// (JM) 케이스 추가 후 리스트 확인
+console.log('---')
+editor.addCharacter("b", 10, 1);
+editor.addCharacter("d", 20, 2);
+editor.addCharacter("c", 30, 3);
+editor.addCharacter("e", 40, 4);
+editor.addCharacter("c", 10, 0);
+editor.addCharacter("d", 20, 0);
+editor.addCharacter("c", 30, 0);
+editor.addCharacter("e", 40, 0);
+editor.listFlyweights();
