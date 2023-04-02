@@ -1,4 +1,11 @@
+/**
+ * 오리지네이터(Originator)는 시간이 지남에 따라 변경될 수 있는 중요한 상태를 보유합니다.
+ * 또한 상태를 메멘토 안에 저장하는 메소드와 메멘토에서 상태를 복원하는 다른 메소드를 정의합니다.
+ */
 class Originator {
+  /**
+   * 단순함을 위해, 오리지네이터의 상태는 단일 변수 내에 저장됩니다.
+   */
   private state: string;
 
   constructor(state: string) {
@@ -6,6 +13,10 @@ class Originator {
     console.log(`Originator: My initial state is: ${state}`); // 1번
   }
 
+  /**
+   * 오리지네이터의 비즈니스 로직은 내부 상태에 영향을 줄 수 있습니다.
+   * 따라서 클라이언트는 비즈니스 로직의 메소드를 실행하기 전에 save() 메소드를 사용하여 상태를 백업해야 합니다.
+   */
   public doSomething(): void {
     console.log("Originator: I'm doing something important.");
     this.state = this.generateRandomString(30);
@@ -20,16 +31,26 @@ class Originator {
     ).join("");
   }
 
+  /**
+   * 현재 상태를 메멘토 안에 저장합니다.
+   */
   public save(): Memento {
     return new ConcreteMemento(this.state);
   }
 
+  /**
+   * 메멘토 객체로부터 오리지네이터의 상태를 복원합니다.
+   */
   public restore(memento: Memento): void {
     this.state = memento.getState();
     console.log(`Originator: My state has changed to: ${this.state}`);
   }
 }
 
+/**
+ * 메멘토(Memento) 인터페이스는 생성 날짜나 이름과 같은 메멘토의 메타데이터를 검색할 수 있는 방법을 제공합니다.
+ * 그러나 오리지네이터의 상태를 노출하지 않습니다.
+ */
 interface Memento {
   getState(): string;
 
@@ -38,6 +59,9 @@ interface Memento {
   getDate(): string;
 }
 
+/**
+ * 구상 메멘토는 오리지네이터의 상태를 저장하는 인프라를 포함합니다.
+ */
 class ConcreteMemento implements Memento {
   private state: string;
 
@@ -48,10 +72,16 @@ class ConcreteMemento implements Memento {
     this.date = new Date().toISOString().slice(0, 19).replace("T", " ");
   }
 
+  /**
+   * 오리지네이터는 자신의 상태를 복원할 때 이 메소드를 사용합니다.
+   */
   public getState(): string {
     return this.state;
   }
 
+  /**
+   * 나머지 메소드들은 케어테이커(Caretaker)가 메타데이터를 표시하는 데 사용됩니다.
+   */
   public getName(): string {
     return `${this.date} / (${this.state.substr(0, 9)}...)`;
   }
@@ -61,6 +91,11 @@ class ConcreteMemento implements Memento {
   }
 }
 
+/**
+ * 케어테이커는 구상 메멘토 클래스에 의존하지 않습니다.
+ * 따라서 메멘토 안에 저장된 오리지네이터의 상태에 접근할 수 없습니다.
+ * 모든 메멘토는 기본 Memento 인터페이스를 통해 작동합니다.
+ */
 class Caretaker {
   private mementos: Memento[] = [];
 
@@ -95,6 +130,9 @@ class Caretaker {
   }
 }
 
+/**
+ * 클라이언트 코드.
+ */
 // 1. 이부분에서 Originator: My initial state is: Super-duper-super-puper-super.
 const originator = new Originator("Super-duper-super-puper-super.");
 const caretaker = new Caretaker(originator);

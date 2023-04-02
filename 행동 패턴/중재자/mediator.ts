@@ -2,7 +2,7 @@
 /**
  * 중재자(Mediator) 인터페이스는 컴포넌트들이 다양한 이벤트에 대해 중재자에게 알리는 데 사용되는 메소드를 선언합니다.
  * 중재자는 이러한 이벤트에 반응하고 실행을 다른 컴포넌트로 전달할 수 있습니다.
-*/
+ */
 interface Mediator {
   notify(sender: object, event: string): void;
 }
@@ -10,7 +10,7 @@ interface Mediator {
 // 실질적인 중개자
 /**
  * 구상 중재자는 여러 컴포넌트를 조율하여 협력적인 동작을 구현합니다.
-*/
+ */
 class ConcreteMediator implements Mediator {
   private component1: Component1;
 
@@ -41,7 +41,7 @@ class ConcreteMediator implements Mediator {
 // 기본 컴포넌트 틀
 /**
  * 베이스 컴포넌트는 중재자 인스턴스를 컴포넌트 객체 내에 저장하는 기본 기능을 제공합니다.
-*/
+ */
 class BaseComponent {
   protected mediator: Mediator;
 
@@ -59,7 +59,7 @@ class BaseComponent {
  * 구상 컴포넌트는 다양한 기능을 구현합니다.
  * 다른 컴포넌트에 의존하지 않습니다.
  * 또한 구상 중재자 클래스에도 의존하지 않습니다.
-*/
+ */
 class Component1 extends BaseComponent {
   public doA(): void {
     console.log("Component 1 does A.");
@@ -86,7 +86,7 @@ class Component2 extends BaseComponent {
 
 /**
  * 클라이언트 코드.
-*/
+ */
 const c1 = new Component1(); // 예를들어 버튼
 const c2 = new Component2(); // 예를들어 체크박스
 const mediator = new ConcreteMediator(c1, c2); // 중재자에게 등록
