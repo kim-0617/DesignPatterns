@@ -1,6 +1,6 @@
 # require vs import 문법
 
-자바스크립트 개발을 하다보면 모듈을 불러오는 문법 두가지 (  **require**  /  **exports**  ) 와 (  **import** /  **export**  ) 키워드를 접하게 되는데, 이 둘은 비슷하면서도 달라 가끔 자바스크립트 개발하는데 있어 혼동을 준다.
+자바스크립트 개발을 하다보면 모듈을 불러오는 문법 두가지 (  **require**  /  **exports**  ) 와 (  **import** /  **export**  ) 키워드를 접하게 되는데, 이 둘은 비슷하면서도 달라 가끔 자바스크립트 개발하는데 있어 혼동을 준다.
 
 ( **require** / **exports** ) 는 NodeJS에서 사용되고 있는  CommonJS  키워드이고 Ruby 언어 스타일과 비슷하다라고 볼수 있다.
 
@@ -190,6 +190,7 @@ obj.sayHello(); // Hello World!
 const person = new obj.Person('inpa');
 ```
 
+<br />
 
 # Node.js 에서 import 키워드 사용 방법
 
