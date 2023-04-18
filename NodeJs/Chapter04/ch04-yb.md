@@ -135,7 +135,7 @@ export function spider (url, cb) {
     
     3-1. 재귀함수로 적용하여 순차적인 웹 스파이더를 호출하여 웹 스파이더 버전2
     
-    ```
+    ```jsx
     import fs from 'fs'
     import path from 'path'
     import superagent from 'superagent'
@@ -220,7 +220,7 @@ export function spider (url, cb) {
     
     3-2. 병렬 실행을 이용하여 비동기 작업을 병렬로 실행하는 방식을 웹 스파이더 버전3
     
-    ```
+    ```jsx
     import fs from 'fs'
     import path from 'path'
     import superagent from 'superagent'
