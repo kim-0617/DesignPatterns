@@ -1,8 +1,9 @@
-```jsx
-// async & await
-// clear style of using promise
-// 기존에 존재하는 Promise를 이용하여 간편하게 작성할 수 있게 도와준다(Syntatic Sugar)
 
+### async & await
+- clear style of using promise
+- 기존에 존재하는 Promise를 이용하여 간편하게 작성할 수 있게 도와준다(Syntatic Sugar)
+
+```jsx
 // 1. Promise transger async/await
 function fetchUser() {
   return new Promise((resolve, reject) => {
